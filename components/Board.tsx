@@ -16,7 +16,6 @@ const Board = () => {
     console.log(e);
   };
   const dropId = "todoboard";
-  // console.log(board);
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable
@@ -26,13 +25,14 @@ const Board = () => {
       >
         {(provided) => (
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full max-w-7xl mx-auto"
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
             {Array.from(board.columns.entries()).map(([id, column], index) => (
               <Column key={id} todos={column.todos} id={id} index={index} />
             ))}
+            {provided.placeholder}
           </div>
         )}
       </Droppable>
