@@ -17,8 +17,7 @@ const idToColumnText: {
   done: "Done",
 };
 
-const Column = ({ id, todos, index }: props) => {
-  // console.log(todos);
+const ColumnComp = ({ id, todos, index }: props) => {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -78,4 +77,4 @@ const Column = ({ id, todos, index }: props) => {
   );
 };
 
-export default Column;
+export default ColumnComp;

@@ -1,5 +1,5 @@
 import { collectionId, database, databaseId } from "@/Utils/appwriteConfig";
-import { Board, Column, Todo, TypedColumn } from "@/type";
+import { Board, Column, TypedColumn } from "@/type";
 
 export const getTodosByColumn = async () => {
   const data = await database.listDocuments(databaseId, collectionId);
@@ -36,8 +36,8 @@ export const getTodosByColumn = async () => {
   // sort the column by columnTypes
   const sortedColumns = new Map(
     Array.from(columns.entries()).sort(
-      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])
-    )
+      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0]),
+    ),
   );
   const board: Board = {
     columns: sortedColumns,
