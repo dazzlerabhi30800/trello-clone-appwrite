@@ -1,3 +1,4 @@
+import Board from "@/components/Board";
 import Header from "@/components/Header";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col">
       <Header />
       {/* Board */}
+      <Board />
     </main>
   );
 }
