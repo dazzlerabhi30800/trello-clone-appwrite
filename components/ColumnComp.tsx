@@ -4,6 +4,7 @@ import { Draggable, Droppable } from "@hello-pangea/dnd";
 import TodoCard from "./TodoCard";
 import { FaPlusCircle } from "react-icons/fa";
 import { useBoardStore } from "@/Store/BoardStore";
+import { useModalStore } from "@/Store/ModalStore";
 
 type props = {
   id: TypedColumn;
@@ -20,6 +21,7 @@ const idToColumnText: {
 
 const ColumnComp = ({ id, todos, index }: props) => {
   const [searchString] = useBoardStore((state) => [state.searchString]);
+  const [openModal] = useModalStore((state) => [state.openModal]);
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -46,7 +48,7 @@ const ColumnComp = ({ id, todos, index }: props) => {
                       : todos.filter((todo) =>
                           todo.title
                             .toLowerCase()
-                            .includes(searchString.toLowerCase())
+                            .includes(searchString.toLowerCase()),
                         ).length}
                   </span>
                 </h2>
@@ -80,7 +82,10 @@ const ColumnComp = ({ id, todos, index }: props) => {
                   })}
                   {provided.placeholder}
                   <div className="flex justify-end items-center py-2">
-                    <button className="text-2xl md:text-3xl text-green-500 hover:text-sky-500">
+                    <button
+                      onClick={openModal}
+                      className="text-2xl md:text-3xl text-green-500 hover:text-sky-500"
+                    >
                       <FaPlusCircle />
                     </button>
                   </div>

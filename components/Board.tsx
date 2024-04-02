@@ -27,6 +27,7 @@ const Board = () => {
       entries.splice(destination.index, 0, removed);
       const rearrangedColumns = new Map<TypedColumn, Column>(entries);
       setBoard({ ...board, columns: rearrangedColumns });
+      return;
     }
 
     // This step is necessary to store indexes of store as number 0, 1, 2 etc instead of droppableIds as they are in string so first we have to convert them into numbers.

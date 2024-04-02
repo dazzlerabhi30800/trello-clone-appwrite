@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import Avatar from "react-avatar";
 import { useBoardStore } from "@/Store/BoardStore";
-import { fetchSuggestion } from "@/libs/fetchSuggestion";
 
 const Header = () => {
   const [searchString, setSearchString, board] = useBoardStore((state) => [
