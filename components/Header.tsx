@@ -1,10 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import Avatar from "react-avatar";
+import { useBoardStore } from "@/Store/BoardStore";
+import { fetchSuggestion } from "@/libs/fetchSuggestion";
 
 const Header = () => {
+  const [searchString, setSearchString, board] = useBoardStore((state) => [
+    state.searchString,
+    state.setSearchString,
+    state.board,
+  ]);
+
   return (
     <header>
       <div className="flex flex-col gap-4 p-4 md:flex-row md:gap-0 items-center justify-between w-full bg-gray-500/15">
@@ -24,6 +32,8 @@ const Header = () => {
             <FaSearch className="text-gray-400 text-lg md:text-xl" />
             <input
               type="text"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
               placeholder="Search"
               className="flex-1 md:flex-initial outline-none"
             />

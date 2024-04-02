@@ -1,4 +1,5 @@
-import { Todo } from "@/type";
+import { useBoardStore } from "@/Store/BoardStore";
+import { Todo, TypedColumn } from "@/type";
 import {
   DraggableProvidedDragHandleProps,
   DraggableProvidedDraggableProps,
@@ -8,7 +9,7 @@ import { FaTimes } from "react-icons/fa";
 
 type todocard = {
   todo: Todo;
-  id: string;
+  id: TypedColumn ;
   index: number;
   innerRef: (element?: HTMLElement | null) => void;
   draggableProps: DraggableProvidedDraggableProps;
@@ -23,6 +24,7 @@ const TodoCard = ({
   dragHandleProps,
   draggableProps,
 }: todocard) => {
+  const [deleteTask] = useBoardStore((state) => [state.deleteTask]);
   return (
     <div
       {...draggableProps}
@@ -32,7 +34,10 @@ const TodoCard = ({
     >
       <div className="flex justify-between items-center p-5">
         <p className="text-sm font-medium">{todo.title}</p>
-        <button className="bg-red-600 rounded-full text-sm p-1 text-white hover:bg-red-800">
+        <button
+          onClick={() => deleteTask(index, todo, id)}
+          className="bg-red-600 rounded-full text-sm p-1 text-white hover:bg-red-800"
+        >
           <FaTimes />
         </button>
       </div>
