@@ -6,12 +6,14 @@ import ColumnComp from "./ColumnComp";
 import { Column, TypedColumn } from "@/type";
 
 const Board = () => {
-  const [getBoard, board, setBoard, updateTodoInDB] = useBoardStore((state) => [
-    state.getBoard,
-    state.board,
-    state.setBoard,
-    state.updateTodoInDB,
-  ]);
+  const [getBoard, board, setBoard, updateTodoInDB, updateSameColumnInDB] =
+    useBoardStore((state) => [
+      state.getBoard,
+      state.board,
+      state.setBoard,
+      state.updateTodoInDB,
+      state.updateSameColumnInDB,
+    ]);
   useEffect(() => {
     getBoard();
   }, [getBoard]);
@@ -54,7 +56,12 @@ const Board = () => {
       };
       const newColumns = new Map(board.columns);
       newColumns.set(startCol.id, newCol);
+
       setBoard({ ...board, columns: newColumns });
+      // console.log(newTodos);
+      newTodos.map((todo, index) => {
+        updateSameColumnInDB(todo, index);
+      });
     } else {
       // dragging to another column
       const finishTodos = Array.from(finishCol.todos);

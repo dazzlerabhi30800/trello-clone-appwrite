@@ -16,6 +16,7 @@ export const getTodosByColumn = async () => {
       $createdAt: todo.$createdAt,
       title: todo.title,
       description: todo.description,
+      position: todo.position,
       // to check if image exist or not
       ...(todo.image && { image: JSON.parse(todo.image) }),
     });
@@ -31,6 +32,16 @@ export const getTodosByColumn = async () => {
         todos: [],
       });
     }
+    columns.set(columnType, {
+      id: columnType,
+      todos: columns
+        .get(columnType)!
+        .todos.map((todo, index) => ({
+          ...todo,
+          position: todo.position ? todo.position : index + 1,
+        }))
+        .sort((a, b) => a.position - b.position),
+    });
   }
   // console.log(columns);
   // sort the column by columnTypes
