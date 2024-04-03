@@ -1,10 +1,12 @@
 import {
+  ID,
   collectionId,
   database,
   databaseId,
   storage,
 } from "@/Utils/appwriteConfig";
 import { getTodosByColumn } from "@/libs/getTodos";
+import { imageUpload } from "@/libs/uploadImage";
 import { Board, Column, Image, Todo, TypedColumn } from "@/type";
 import { create } from "zustand";
 
@@ -22,6 +24,7 @@ interface BoardState {
   searchString: string;
   setSearchString: (searchString: string) => void;
   deleteTask: (taskIndex: number, todoId: Todo, id: TypedColumn) => void;
+  addTask: (todo: string, columnId: TypedColumn, image?: File | null) => void;
   setImage: (image: File | null) => void;
 }
 
@@ -73,5 +76,51 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   },
   setImage: (image) => {
     set({ image });
+  },
+  addTask: async (todo, columnId, image) => {
+    let file: Image | undefined;
+    if (image) {
+      const imageFileUpload = await imageUpload(image);
+      if (imageFileUpload) {
+        file = {
+          bucketId: imageFileUpload.bucketId,
+          fileId: imageFileUpload.$id,
+        };
+      }
+    }
+
+    const newTask = await database.createDocument(
+      databaseId,
+      collectionId,
+      ID.unique(),
+      {
+        title: todo,
+        status: columnId,
+        ...(file && { image: JSON.stringify(file) }),
+      }
+    );
+    set({ newTaskInput: "" });
+    const newColumns = new Map(get().board.columns);
+    const length = newColumns.get(columnId)?.todos.length;
+    if (!newTask) return;
+    const newTodo: any = {
+      $id: newTask.$id,
+      $createdAt: new Date().toISOString(),
+      title: todo,
+      position: length! + 1,
+      status: columnId,
+      ...(file && { image: file }),
+    };
+    const column = newColumns.get(columnId);
+    if (!column) {
+      newColumns.set(columnId, {
+        id: columnId,
+        todos: [newTodo],
+      });
+    } else {
+      newColumns.get(columnId)?.todos.push(newTodo);
+    }
+
+    set({ board: { columns: newColumns } });
   },
 }));

@@ -16,7 +16,7 @@ const Header = () => {
     <header>
       <div className="flex flex-col gap-4 p-4 md:flex-row md:gap-0 items-center justify-between w-full bg-gray-500/15">
         {/* Gradient Background */}
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-pink-400 to-[#0055D1] rounded-md opacity-30 filter blur-3xl -z-50" />
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-br from-pink-400 to-[#0055D1] rounded-md opacity-50 filter blur-3xl -z-50" />
         <Image
           src="https://links.papareact.com/c2cdd5"
           priority={true}

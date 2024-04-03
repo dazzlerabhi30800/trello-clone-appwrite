@@ -20,8 +20,16 @@ const idToColumnText: {
 };
 
 const ColumnComp = ({ id, todos, index }: props) => {
-  const [searchString] = useBoardStore((state) => [state.searchString]);
+  const [searchString, setNewTaskType] = useBoardStore((state) => [
+    state.searchString,
+    state.setNewTaskType,
+  ]);
   const [openModal] = useModalStore((state) => [state.openModal]);
+
+  const handleOpenModal = () => {
+    setNewTaskType(id);
+    openModal();
+  };
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -48,7 +56,7 @@ const ColumnComp = ({ id, todos, index }: props) => {
                       : todos.filter((todo) =>
                           todo.title
                             .toLowerCase()
-                            .includes(searchString.toLowerCase()),
+                            .includes(searchString.toLowerCase())
                         ).length}
                   </span>
                 </h2>
@@ -83,7 +91,7 @@ const ColumnComp = ({ id, todos, index }: props) => {
                   {provided.placeholder}
                   <div className="flex justify-end items-center py-2">
                     <button
-                      onClick={openModal}
+                      onClick={handleOpenModal}
                       className="text-2xl md:text-3xl text-green-500 hover:text-sky-500"
                     >
                       <FaPlusCircle />

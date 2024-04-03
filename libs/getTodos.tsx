@@ -15,7 +15,7 @@ export const getTodosByColumn = async () => {
       $id: todo.$id,
       $createdAt: todo.$createdAt,
       title: todo.title,
-      description: todo.description,
+      // description: todo.description,
       position: todo.position,
       // to check if image exist or not
       ...(todo.image && { image: JSON.parse(todo.image) }),
