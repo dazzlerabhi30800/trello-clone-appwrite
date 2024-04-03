@@ -135,7 +135,7 @@ export const useBoardStore = create<BoardState>()(
         Array.from(entries.keys()).map((key) => {
           order.push(key);
         });
-        set({columnOrder: order})
+        set({ columnOrder: order });
       },
     }),
     {
