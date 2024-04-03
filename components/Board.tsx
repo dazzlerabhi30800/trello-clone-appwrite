@@ -6,14 +6,21 @@ import ColumnComp from "./ColumnComp";
 import { Column, TypedColumn } from "@/type";
 
 const Board = () => {
-  const [getBoard, board, setBoard, updateTodoInDB, updateSameColumnInDB] =
-    useBoardStore((state) => [
-      state.getBoard,
-      state.board,
-      state.setBoard,
-      state.updateTodoInDB,
-      state.updateSameColumnInDB,
-    ]);
+  const [
+    getBoard,
+    board,
+    setBoard,
+    updateTodoInDB,
+    updateSameColumnInDB,
+    setColumnOrder,
+  ] = useBoardStore((state) => [
+    state.getBoard,
+    state.board,
+    state.setBoard,
+    state.updateTodoInDB,
+    state.updateSameColumnInDB,
+    state.setColumnOrder,
+  ]);
   useEffect(() => {
     getBoard();
   }, [getBoard]);
@@ -26,6 +33,10 @@ const Board = () => {
       const [removed] = entries.splice(source.index, 1);
       entries.splice(destination.index, 0, removed);
       const rearrangedColumns = new Map<TypedColumn, Column>(entries);
+      const newColumns = {
+        columns: rearrangedColumns,
+      }
+      setColumnOrder(newColumns);
       setBoard({ ...board, columns: rearrangedColumns });
       return;
     }

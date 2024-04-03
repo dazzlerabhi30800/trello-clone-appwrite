@@ -58,6 +58,7 @@ const TodoCard = ({
       {imageUrl && (
         <div className="w-full h-[200px] p-2">
           <Image
+            priority={true}
             src={imageUrl}
             alt={todo.title}
             width={200}

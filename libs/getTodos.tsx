@@ -1,7 +1,7 @@
 import { collectionId, database, databaseId } from "@/Utils/appwriteConfig";
 import { Board, Column, TypedColumn } from "@/type";
 
-export const getTodosByColumn = async () => {
+export const getTodosByColumn = async (columnOrder: TypedColumn[]) => {
   const data = await database.listDocuments(databaseId, collectionId);
   const todos = data.documents;
   const columns = todos.reduce((acc, todo) => {
@@ -24,7 +24,8 @@ export const getTodosByColumn = async () => {
     return acc;
   }, new Map<TypedColumn, Column>());
   // if columns doesn't have tods, inprogress or done then add them with empty todos
-  const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
+  const columnTypes: TypedColumn[] =  columnOrder;
+
   for (const columnType of columnTypes) {
     if (!columns.get(columnType)) {
       columns.set(columnType, {
@@ -47,8 +48,8 @@ export const getTodosByColumn = async () => {
   // sort the column by columnTypes
   const sortedColumns = new Map(
     Array.from(columns.entries()).sort(
-      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0]),
-    ),
+      (a, b) => columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])
+    )
   );
   const board: Board = {
     columns: sortedColumns,
