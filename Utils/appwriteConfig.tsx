@@ -15,4 +15,3 @@ const databaseId = process.env.NEXT_PUBLIC_DATABASE_ID!;
 const collectionId = process.env.NEXT_PUBLIC_COLLECTION_ID!;
 
 export { client, account, database, storage, ID, databaseId, collectionId };
-

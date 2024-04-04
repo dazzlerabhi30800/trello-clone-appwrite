@@ -3,6 +3,7 @@
 ## Tech Stack
 
 - Zustand :- for state management
+- Typescript :- for safe type checking
 - React Icons :- for icons
 - React Avatar :- for avatar
 - Appwrite :- for database
