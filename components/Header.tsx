@@ -1,16 +1,26 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
 import Avatar from "react-avatar";
 import { useBoardStore } from "@/Store/BoardStore";
 
 const Header = () => {
-  const [searchString, setSearchString, board] = useBoardStore((state) => [
-    state.searchString,
-    state.setSearchString,
-    state.board,
-  ]);
+  const [searchString, setSearchString, setDebounceString] = useBoardStore(
+    (state) => [
+      state.searchString,
+      state.setSearchString,
+      state.setDebounceString,
+    ],
+  );
+
+  // Debouncing Function with Hook
+  useEffect(() => {
+    const timeoutString = setTimeout(() => {
+      setDebounceString(searchString);
+    }, 500);
+    return () => clearTimeout(timeoutString);
+  }, [searchString]);
 
   return (
     <header>

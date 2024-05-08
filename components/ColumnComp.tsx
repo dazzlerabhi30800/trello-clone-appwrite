@@ -20,8 +20,8 @@ const idToColumnText: {
 };
 
 const ColumnComp = ({ id, todos, index }: props) => {
-  const [searchString, setNewTaskType] = useBoardStore((state) => [
-    state.searchString,
+  const [debouncedString, setNewTaskType] = useBoardStore((state) => [
+    state.debouncedString,
     state.setNewTaskType,
   ]);
   const [openModal] = useModalStore((state) => [state.openModal]);
@@ -51,22 +51,22 @@ const ColumnComp = ({ id, todos, index }: props) => {
                 <h2 className="flex w-full font-bold text-xl justify-between items-center">
                   {idToColumnText[id]}{" "}
                   <span className="text-gray-800 bg-green-200 rounded-[50%] py-1 px-[10px] shadow-md text-sm font-normal">
-                    {!searchString
+                    {!debouncedString
                       ? todos.length
                       : todos.filter((todo) =>
                           todo.title
                             .toLowerCase()
-                            .includes(searchString.toLowerCase())
+                            .includes(debouncedString.toLowerCase()),
                         ).length}
                   </span>
                 </h2>
                 <div className="space-y-2">
                   {todos.map((todo, index) => {
                     if (
-                      searchString &&
+                      debouncedString &&
                       !todo.title
                         .toLowerCase()
-                        .includes(searchString.toLowerCase())
+                        .includes(debouncedString.toLowerCase())
                     )
                       return null;
                     return (

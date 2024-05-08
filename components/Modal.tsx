@@ -23,6 +23,7 @@ function Modal() {
       state.newTaskType,
     ]);
 
+
   // function to add task
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

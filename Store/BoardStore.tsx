@@ -25,7 +25,9 @@ interface BoardState {
   updateTodoInDB: (todo: Todo, columnId: TypedColumn) => void;
   updateSameColumnInDB: (todo: Todo, index: number) => void;
   searchString: string;
+  debouncedString: string;
   setSearchString: (searchString: string) => void;
+  setDebounceString: (searchString: string) => void;
   deleteTask: (taskIndex: number, todoId: Todo, id: TypedColumn) => void;
   addTask: (todo: string, columnId: TypedColumn, image?: File | null) => void;
   setImage: (image: File | null) => void;
@@ -40,6 +42,7 @@ export const useBoardStore = create<BoardState>()(
       newTaskInput: "",
       image: null,
       searchString: "",
+      debouncedString: "",
       newTaskType: "todo",
       setNewTaskType: (input) => {
         set({ newTaskType: input });
@@ -47,6 +50,7 @@ export const useBoardStore = create<BoardState>()(
       },
       columnOrder: ["todo", "inprogress", "done"],
       setSearchString: (searchString) => set({ searchString }),
+      setDebounceString: (debouncedString) => set({debouncedString}),
       setNewTaskInput: (task) => {
         set({ newTaskInput: task });
       },
