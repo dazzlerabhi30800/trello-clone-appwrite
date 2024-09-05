@@ -44,7 +44,7 @@ const ColumnComp = ({ id, todos, index }: props) => {
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className={`p-3 flex flex-col gap-3 flex w-full rounded-2xl shadow-sm ${
+                className={`p-3 flex flex-col gap-3 flex w-full rounded-2xl shadow-md ${
                   snapshot.isDraggingOver ? "bg-green-200" : "bg-white/50"
                 }`}
               >
